@@ -4,6 +4,37 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+#ced{
+  color:#e7663f; 
+}
+#host{
+  color:#585CA7;
+}
+#fa fa-shopping-cart{
+  font-size:48px;
+}
+
+#inputGroupSelect01{
+  border: 1px solid #555;
+  outline-color:#FD9F3E;
+  width: 96%;
+  font-size: 1em;
+  padding: 0.5em;
+  background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 body a{
     transition:0.5s all;
