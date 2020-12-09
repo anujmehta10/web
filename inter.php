@@ -24,16 +24,28 @@ $obj=new DB_con();
       $securityque=$_POST['securityque'];
       $securityans=$_POST['securityans'];
       $password1=$_POST['password1'];
-      
+
+      $abc=$obj->validate($email,$mobile);
+      {
+      if($abc==false)
+      {
       $result=$obj->account($email,$name,$mobile,$password1,$securityque,$securityans);
-      if($result!=false){
-        $row=array();
-        while($arr=$result->fetch_assoc()){
-          $row[]=$arr;
-        }
-        print(json_encode($row));
+        if($result!=false){
+          echo ("Data Stored successfully");
+      //   $row=array();
+      //   while($arr=$result->fetch_assoc()){
+      //     $row[]=$arr;
+      //   }
+      //   print(json_encode($row));
+      //   echo "Signed up successfully";
        }
         else{
           echo "false";
         }
+      }
+      else{
+      echo "Details already exist";
+       }
     }
+  }
+?>

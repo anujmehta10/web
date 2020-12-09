@@ -3,14 +3,14 @@ include('config.php');
 include('header.php');
 $obj=new DB_con();
 
-if(isset($_SESSION['user'])){
-    header('location:user_dashboard.php');
-}elseif(isset($_SESSION['admin'])){
-      header('location:admin_dashboard.php');
-  }
-  else{
-    $r=false;
-}
+// if(isset($_SESSION['user'])){
+//     header('location:admin.php');
+// }elseif(isset($_SESSION['admin'])){
+//       header('location:admin.php');
+//   }
+//   else{
+//     $r=false;
+// }
 //session_start();
 ?>
 <!---fonts-->
@@ -49,7 +49,7 @@ if(isset($_SESSION['user'])){
 								<i class="icon-bar"></i>
 							</button>				  
 							<div class="navbar-brand">
-								<h1><a href="index.html"><span id="ced">Ced</span><span id="host">Hosting</span></a></h1>
+								<h1><a href="index.php"><img src="logo.png" width="160px" height="95px"/></a></h1>
 							</div>
 						</div>
 
@@ -91,7 +91,7 @@ if(isset($_SESSION['user'])){
 
 
 
-?>
+
 	<!---header--->
 		<!---login--->
 			<div class="content">
@@ -148,7 +148,8 @@ if(isset($_SESSION['user'])){
 				                datatype:'json',
 				                success: function(result) {
 				                    //console.log(result);
-				                    alert(result);
+				                    //alert(result);
+				                    $(location).attr('href','admin/index.php');
 				               
 				                       },
 				                error:function(){

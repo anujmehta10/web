@@ -44,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<i class="icon-bar"></i>
 							</button>				  
 							<div class="navbar-brand">
-								<h1><a href="index.html"><span id="ced">Ced</span><span id="host">Hosting</span></a></h1>
+								<h1><a href="index.php"><img src="logo.png" width="160px" height="95px"/></a></h1>
 							</div>
 						</div>
 
@@ -93,13 +93,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		  	  <form method="POST" action="account.php"> 
 				 <div class="register-top-grid">
 					<h3>personal information</h3>
+					<h5 class="error-msg">* mandatory fields</h5>
 					 <div>
-						<span>First Name<label>*</label></span>
+						<span>Name<label>*</label></span>
 						<input type="text" id="name"> 
-					 </div>
-					 <div>
-						<span>Mobile<label>*</label></span>
-						<input type="text" id="mobile"> 
 					 </div>
 					 <div>
 						 <span>Email Address<label>*</label></span>
@@ -116,7 +113,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	                        <option value="What is your favourite teacher's nickname?">What is your favourite teacher's nickname?</option>
                     	</select> 
 					 </div>
-					 <div><input type="text" id="securityanswer"></div>
+					 <div>
+						<span>Mobile (Minimum 10 digits required)<label>*</label></span>
+						<input type="text" id="mobile"> 
+					 </div>
+					 <div>
+					 	<input type="text" id="securityanswer" placeholder="Answer">
+					 </div>
 					 <div class="clearfix"> </div>
 					   <a class="news-letter" href="#">
 						 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>
@@ -163,9 +166,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						var password1=($('#password1').val()).trim();
 						var password2=($('#password2').val()).trim();
 						var vname=/^([a-zA-Z]+\s?)*$/;
-						var vmobile=/^(0)?[0-9]{10}$/;
-						var vemail=/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-						var vpassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
+						var vmobile=/^(0)?[1-9]{1}[0-9]{9}$/;
+						var vemail=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+						var vpassword=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])\S{8,16}$/;
 						if(name=="" || mobile=="" || email=="" || securityque=="" || securityans=="" || password1=="" || password2==""){
 							alert("All Fields are mandotary");
 							return false;
@@ -193,6 +196,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						else if(securityque=="Please select security question."){
 							alert("Please Choose Security question");
 						}
+						else if(securityans=""){
+							alert("Please write security answer");
+						}
 						else{
 							if(name!="" && mobile!="" && email!="" && securityans!="" && password1!="")
 							{
@@ -212,8 +218,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					                    
 					                },					              					         
 					               	success: function(result) {
-				                    	//console.log("result");
-				                    	alert("Sign in successfully");
+				                    	//console.log(result);
+				                    	alert(result);
 				                    
 				                       },
 				                	error:function(){
@@ -227,6 +233,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					    }
 								
 					    });
+
+					
+
+
+					// $('#inputGroupSelect01').change(function(){
+					// 	if(securityque!="Please select security question."){
+					// 	$('#securityanswer').show();
+					// }
+					// });
+					 $('#inputGroupSelect01').click(function(){
+					 	var value=$(this).val();
+					 		if(value!="Please select security question."){
+					 			$('#securityanswer').show();
+					 		}else{
+					 			$('#securityanswer').hide();
+					 		}
+					 	});
+
+
 
 
 					</script>

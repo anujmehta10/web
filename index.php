@@ -41,7 +41,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<i class="icon-bar"></i>
 							</button>				  
 							<div class="navbar-brand">
-								<h1><a href="index.html"><span id="ced">Ced</span><span id="host">Hosting</span></a></h1>
+								<h1><a href="index.php"><img src="logo.png" width="160px" height="95px"/></a></h1>
 							</div>
 						</div>
 
@@ -66,7 +66,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li <?php if($filename=='codes.php'):?>class="active"<?php endif;?>><a href="codes.php"><i class="fa fa-shopping-cart"></i></a></li>
 								<?php 
 							    	if(isset($_SESSION['user'])){
-									echo '<li><a href="#">Logout</a></li>';
+									echo '<li><a href="logout.php">Logout</a></li>';
 								}
 								else{
 									echo '<li if($filename=="login.php"):class="active" endif;><a href="login.php">Login</a></li>';
@@ -173,108 +173,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				</div>
 			<!---brilliantly--->
 			<!---team--->
-				<div class="team">
-					<h3>our team is one of the best</h3>
-					<h5>Professionals that are always on top of their game</h5>
-					<div class="team-grids">
-						<section>
-							<ul id="da-thumbs" class="da-thumbs">
-								<li>
-									<a href="images/t1.jpg" class="b-link-stripe b-animate-go thick box">
-										<img src="images/t1.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t2.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t2.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t3.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t3.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t4.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t4.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>	
-									<a href="images/t5.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t5.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t6.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t6.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t7.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t7.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t8.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t8.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t9.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t9.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="images/t10.jpg" class="b-link-stripe b-animate-go  thick box">
-										<img src="images/t10.jpg" alt="" />
-										<div>
-											<h5>team</h5>
-											<span>non suscipit leo fringilla non suscipit leo fringilla molestie That’s how we set ourselves apart</span>
-										</div>
-									</a>
-								</li>
-							</ul>
-							<div class="clearfix"> </div>
-						</section>
-						
-					</div>
-				</div>
 				<!---team--->
 				<!---prices--->
 					<div class="price-section">

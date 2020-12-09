@@ -1,11 +1,11 @@
-<?php ?>
+<?php ?><!-- 
 <div class="facebook-section">
 					<div class="container">
 					<div class="face-top">
 						<h5><img src="images/facebook.png"><span>I can’t believe my grand mothers making me take Out the garbage I’m rich fuck this I’m going home I don’t need this shit</span></h5>
 					</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="footer-section">
 					<div class="container">
 						<div class="footer-grids">
@@ -23,7 +23,7 @@
 									</div>
 									<div class="clearfix"></div>
 								</div>
-								<div class="footer-top second">
+								<!-- <div class="footer-top second">
 									<div class="col-md-4 foot-top">
 									<img src="images/f4.jpg" class="img-responsive" alt=""/>
 									</div>
@@ -34,7 +34,7 @@
 									<img src="images/f2.jpg" class="img-responsive" alt=""/>
 									</div>
 									<div class="clearfix"></div>
-								</div>
+								</div> -->
 							</div>
 							<div class="col-md-3 footer-grid">
 								<h4>tag cloud</h4>
@@ -44,10 +44,10 @@
 								<li><a href="#">1170px</a></li>
 								<li><a href="#">Photoshop Freebie</a></li>
 								<li><a href="#">Designer</a></li>
-								<li><a href="#">Themes</a></li>
+								<!-- <li><a href="#">Themes</a></li>
 								<li><a href="#">thislooksgreat chris</a></li>
 								<li><a href="#">Lovely Area</a></li>
-								<li><a href="#">You might use it...</a></li>
+								<li><a href="#">You might use it...</a></li> -->
 								</ul>
 							</div>
 							<div class="col-md-3 footer-grid">
@@ -62,7 +62,7 @@
 									</div>
 									<div class="clearfix"></div>
 								</div>
-								<div class="recent-grids">
+								<!-- <div class="recent-grids">
 									<div class="col-md-4 recent-great">
 										<img src="images/f1.jpg" class="img-responsive" alt=""/>
 									</div>
@@ -81,21 +81,21 @@
 										<span>22 October 2014</span>
 									</div>
 									<div class="clearfix"></div>
-								</div>
+								</div> -->
 							</div>
 							<div class="col-md-3 footer-grid">
 								<h4>get in touch</h4>
 								<p>8901 Marmora Road</p>
 								<p>Glasgow, DO4 89GR.</p>
 								<p>Telephone : +1 234 567 890</p>
-								<p>Telephone : +1 234 567 890</p>
+								<!-- <p>Telephone : +1 234 567 890</p>
 								<p>FAX : + 1 234 567 890</p>
-								<p>E-mail : <a href="mailto:example@mail.com"> example@mail.com</a></p>
+								<p>E-mail : <a href="mailto:example@mail.com"> example@mail.com</a></p> -->
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="copy-section">
-							<p>&copy; 2016 Planet Hosting. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+							<p>&copy; 2020 Planet Hosting. All rights reserved | Design by <a href="#">CEDCOSS</a></p>
 						</div>
 					</div>
 				</div>

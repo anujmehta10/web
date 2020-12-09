@@ -40,7 +40,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<i class="icon-bar"></i>
 							</button>				  
 							<div class="navbar-brand">
-								<h1><a href="index.html"><span id="ced">Ced</span><span id="host">Hosting</span></a></h1>
+								<h1><a href="index.php"><img src="logo.png" width="160px" height="95px"/></a></h1>
 							</div>
 						</div>
 
