@@ -1,7 +1,9 @@
 <?php session_start();
-include('config.php');
+include('admin/config.php');
 include('header.php');
 $obj=new DB_con();
+include_once('admin/Product.php');
+$pro=new Product();
 
 // if(isset($_SESSION['user'])){
 //     header('location:admin.php');
@@ -62,10 +64,19 @@ $obj=new DB_con();
 								<li <?php if($filename=='linuxhosting.php' ||$filename=='wordpresshosting.php' ||$filename=='windowshosting.php'||$filename=='cmshosting.php' ):?>class="dropdown active"<?php endif;?>>
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
-										<li><a href="linuxhosting.php">Linux hosting</a></li>
+										<!-- <li><a href="linuxhosting.php">Linux hosting</a></li>
 										<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
 										<li><a href="windowshosting.php">Windows Hosting</a></li>
-										<li><a href="cmshosting.php">CMS Hosting</a></li>
+										<li><a href="cmshosting.php">CMS Hosting</a></li> -->
+										<?php 
+										$data=$pro->nav();
+										if($data!=false){
+											for($i=0;$i<count($data);$i++){
+												echo '<li><a href="#">'.$data[$i]['prod_name'].'</a></li>';
+
+											}
+										}
+										?>
 									</ul>			
 								</li>
 								<li <?php if($filename=='pricing.php'):?>class="active"<?php endif;?>><a href="pricing.php">Pricing</a></li>
@@ -149,7 +160,7 @@ $obj=new DB_con();
 				                success: function(result) {
 				                    //console.log(result);
 				                    //alert(result);
-				                    $(location).attr('href','admin/index.php');
+				                   $(location).attr('href','admin/index.php');
 				               
 				                       },
 				                error:function(){

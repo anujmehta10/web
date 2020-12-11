@@ -4,7 +4,10 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-<?php include('header.php'); ?>
+<?php include('header.php'); 
+include_once('admin/Product.php');
+$pro=new Product();
+?>
 <!---fonts-->
 <!--script-->
 <script src="js/modernizr.custom.97074.js"></script>
@@ -54,10 +57,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li <?php if($filename=='linuxhosting.php' ||$filename=='wordpresshosting.php' ||$filename=='windowshosting.php'||$filename=='cmshosting.php' ):?>class="dropdown active"<?php endif;?>>
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
-										<li><a href="linuxhosting.php">Linux hosting</a></li>
+										<!-- <li><a href="linuxhosting.php">Linux hosting</a></li>
 										<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
 										<li><a href="windowshosting.php">Windows Hosting</a></li>
-										<li><a href="cmshosting.php">CMS Hosting</a></li>
+										<li><a href="cmshosting.php">CMS Hosting</a></li> -->
+										<?php 
+										$data=$pro->nav();
+										if($data!=false){
+											for($i=0;$i<count($data);$i++){
+												echo '<li><a href="#">'.$data[$i]['prod_name'].'</a></li>';
+
+											}
+										}
+										?>
 									</ul>			
 								</li>
 								<li <?php if($filename=='pricing.php'):?>class="active"<?php endif;?>><a href="pricing.php">Pricing</a></li>

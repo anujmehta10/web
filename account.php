@@ -196,7 +196,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						else if(securityque=="Please select security question."){
 							alert("Please Choose Security question");
 						}
-						else if(securityans=""){
+						else if(securityans===""){
 							alert("Please write security answer");
 						}
 						else{

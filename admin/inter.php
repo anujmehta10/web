@@ -64,9 +64,7 @@ $pro=new Product();
     }
     if(isset($_GET['showproduct'])){
       $data=$pro->showproductbycategory();
-      if($data!=false){
-        print_r(json_encode($data));
-      }
+      print_r(json_encode($data));
     }
     
     
@@ -75,41 +73,15 @@ $pro=new Product();
       $action=$_POST['action'];
       $result=$pro->manageproductbycategory($id,$action);
       if($result=='true'){
-        echo json_encode("true");
+        echo "true";
       }
-      else if($result=='false'){
-        echo json_encode("false");
+      if($result=='false'){
+        echo "false";
       }else{
-      echo json_encode($result);
+        print_r($result);
       }
     }
 
-      if(isset($_POST['update'])){
-        $id=$_POST['id'];
-        $name=$_POST['name'];
-        $link=$_POST['link'];
-        //cho $link;
-        $result=$pro->update($id,$name,$link);
-        if($result=='true'){
-          echo json_encode("true");
-        }else{
-        echo json_encode("false");
-        }
-      }
-
-      if(isset($_POST['newpro'])){
-        $cat=$_POST['cat'];
-        $pro_name=$_POST['pro_name'];
-        $url=$_POST['url'];
-        $m_price=$_POST['m_price'];
-        $a_price=$_POST['a_price'];
-        $sku=$_POST['sku'];
-        $webs=$_POST['webs'];
-        $band=$_POST['band'];
-        $domain=$_POST['domain'];
-        $language=$_POST['language'];
-        $mail=$_POST['mail'];
-      }
 
 
 

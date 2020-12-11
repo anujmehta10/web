@@ -1,41 +1,12 @@
-<?php 
-class DB_con
+<?php include_once('admin/config.php');
+$db=new DB_con();
+class User
 {
-    public $conn;
-    public $dbhost;
-    public $dbuser;
-    public $dbpass;
-    public $dbname;
-    function __construct()
+	public function login($email,$password)
     {
-        $siteurl = "http://localhost/cedhosting/";
-        $dbhost = "localhost";
-        $dbuser = "root";
-        $dbpass = "";
-        $dbname = "cedhosting";
-
-        $this->conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-
-        if ($this
-            ->conn
-            ->connect_error)
-        {
-            die("Connection failed: " . $this
-                ->conn
-                ->connect_error);
-        }
-        else
-        {
-            //echo "Connected successfully";
-            
-        }
-
-    }
-
-    public function login($email,$password)
-    {
+    	$db=new DB_con();
         $sql="SELECT * FROM `tbl_user` WHERE `email`='$email' AND `password`='$password'";
-        $result=$this->conn->query($sql);
+        $result=$db->conn->query($sql);
         $error ="";
         $success="";
         if ($result->num_rows>0)
@@ -76,12 +47,13 @@ class DB_con
             return $error;
                  
         }
-        $this->conn->close();
+        $db->conn->close();
 
     }
     public function validate($email,$mobile){
+    	$db=new DB_con();
         $sql="SELECT * FROM `tbl_user` WHERE `email`='$email' OR `mobile`='$mobile'";
-        $result=$this->conn->query($sql);
+        $result=$db->conn->query($sql);
         if($result->num_rows>0){
             return $result;
         }
@@ -90,74 +62,33 @@ class DB_con
 
     public function account($email,$name,$mobile,$password1,$securityque,$securityans)
     {
+    	$db=new DB_con();
         $sql="INSERT INTO `tbl_user`(`email`,`name`,`mobile`,`email_approved`,`phone_approved`,`active`,`is_admin`,`sign_up_date`,`password`,`security_question`,`security_answer`) VALUES('$email','$name','$mobile','0','0','0','0',NOW(),'$password1','$securityque','$securityans')";
-         $result = $this->conn->query($sql);
+         $result = $db->conn->query($sql);
         if ($result=== true){
            return $result;
         
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ?>
