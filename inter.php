@@ -130,7 +130,20 @@ $pro=new Product();
         }
       }
 
-     
+      if(isset($_POST['action'])){
+        if($_POST['action'] == "edit") {
+          $id=$_POST['id'];
+          $result=$pro->editproductdata($id);
+          if($result=='true'){
+            echo json_encode("true");
+          }
+          else if($result=='false'){
+            echo json_encode("false");
+          }else{
+           echo json_encode($result);
+          }
+        }
+      }
 
 
 

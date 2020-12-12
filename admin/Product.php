@@ -137,8 +137,8 @@ class Product
                 $mail=$description->{'mail'};
                 $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['link'],$row['mon_price'],
                 $row['annual_price'],$row['sku'],$row['prod_available'],$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
-                data-id='".$row['id']."' id='edit-product-by-category' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
-                class='btn btn-outline-danger' data-id='".$row['id']."' id='delete-product-by-category'>DELETE
+                data-id='".$row['prod_id']."' id='edit-product-by-category' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
+                class='btn btn-outline-danger' data-id='".$row['prod_id']."' id='delete-product-by-category'>DELETE
                 </a>"); 
             }
         
@@ -148,7 +148,20 @@ class Product
    
     }
 
-
+    public function editproductdata($id){
+            $db=new DB_con(); 
+            $value = array();
+            // echo $id;
+            $sql="SELECT * FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id WHERE `prod_id`='$id'";
+            // $sql="SELECT * FROM `tbl_product` WHERE `id`='$id'";
+            $data=$db->conn->query($sql);
+            if($data->num_rows>0){
+                while($row=$data->fetch_assoc()){
+                    $value[] = $row;
+                }
+            }
+            return $value;
+    }
 
 
 
