@@ -99,6 +99,54 @@ class Product
         }
     }
 
+    public function addpro($cat,$pro_name,$url,$description,$m_price,$a_price,$sku){
+        $db=new DB_con();
+        $insert="INSERT INTO `tbl_product`(`prod_parent_id`,`prod_name`,`link`,`prod_available`,`prod_launch_date`) VALUES 
+        ('$cat','$pro_name','$url','0',NOW())";
+        if ($db->conn->query($insert) === TRUE) {
+            $last_id=$db->conn->insert_id;
+            $insert1="INSERT INTO tbl_product_description(`prod_id`,`description`,`mon_price`,`annual_price`,`sku`) VALUES('$last_id',
+            '$description','$m_price','$a_price','$sku')";
+            if ($db->conn->query($insert1) === TRUE) {
+                $return= "New record created successfully";
+                }
+             }  else {
+            $return= "Error: " . $sql . "<br>" . $conn->error;
+          }
+          return $return;
+    }
+        
+    public function viewproduct(){
+        $db=new DB_con();
+        $arr = array();
+        $sql="SELECT * FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id";
+        $data=$db->conn->query($sql);
+        if($data->num_rows>0){
+            while($row=$data->fetch_assoc()){
+                if($row['prod_available']=='1'){
+                    $available="available";
+                }
+                else{
+                    $available="unavailable";
+                }
+                $description=json_decode($row['description']);
+                $webs=$description->webspace;
+                $band=$description->bandwidth;
+                $domain=$description->domain;
+                $language=$description->{'lang'};
+                $mail=$description->{'mail'};
+                $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['link'],$row['mon_price'],
+                $row['annual_price'],$row['sku'],$row['prod_available'],$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
+                data-id='".$row['id']."' id='edit-product-by-category' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
+                class='btn btn-outline-danger' data-id='".$row['id']."' id='delete-product-by-category'>DELETE
+                </a>"); 
+            }
+        
+            return $arr;
+        
+        }
+   
+    }
 
 
 

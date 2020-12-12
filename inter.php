@@ -88,7 +88,7 @@ $pro=new Product();
         $id=$_POST['id'];
         $name=$_POST['name'];
         $link=$_POST['link'];
-        //cho $link;
+        //echo $link;
         $result=$pro->update($id,$name,$link);
         if($result=='true'){
           echo json_encode("true");
@@ -109,9 +109,28 @@ $pro=new Product();
         $domain=$_POST['domain'];
         $language=$_POST['language'];
         $mail=$_POST['mail'];
+        $description=array(
+          "webspace"=>$webs,
+          "bandwidth"=>$band,
+          "domain"=>$domain,
+          "lang"=>$language,
+          "mail"=>$mail,
+        );
+        $description=json_encode($description);
+        $result=$pro->addpro($cat,$pro_name,$url,$description,$m_price,$a_price,$sku);
+        $arr=$result;
+        echo json_encode($arr);
+        // echo $cat;
       }
 
+      if(isset($_GET['viewproduct'])){
+        $data=$pro->viewproduct();
+        if($data!=false){
+          print_r(json_encode($data));
+        }
+      }
 
+     
 
 
 

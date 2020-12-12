@@ -56,7 +56,7 @@ if(isset($_SESSION['admin'])){
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="examples/profile.html">
+              <a class="nav-link" href="viewproduct.php">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">View Products</span>
               </a>
@@ -651,12 +651,6 @@ $('.modal-body').on('click','.update',function(){
 
 
 
-
-
-
-
-
-
 $('#showproduct').on('click','#edit-product-by-category',function(){
   var id=$(this).data('id');
   var action="edit";
@@ -739,10 +733,6 @@ function manageproductbycategory(action,id){
     }
   });
 }
-
-
-
-
 
 </script>
 
