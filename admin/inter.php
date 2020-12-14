@@ -1,3 +1,4 @@
+<!-- </opt/lampp/htdocs/cedhosting/inter.php> Not Admin(onlu user) -->
 <?php session_start();
 include_once('admin/config.php');
 $obj=new DB_con();
@@ -66,19 +67,18 @@ $pro=new Product();
       $data=$pro->showproductbycategory();
       print_r(json_encode($data));
     }
-    
-    
-    if(isset($_POST['manageproductbycategory'])){
+
+
+    if(isset($_POST['update'])){
       $id=$_POST['id'];
-      $action=$_POST['action'];
-      $result=$pro->manageproductbycategory($id,$action);
+      $name=$_POST['name'];
+      $link=$_POST['link'];
+      //echo $link;
+      $result=$pro->update($id,$name,$link);
       if($result=='true'){
-        echo "true";
-      }
-      if($result=='false'){
-        echo "false";
+        echo json_encode("true");
       }else{
-        print_r($result);
+      echo json_encode("false");
       }
     }
 

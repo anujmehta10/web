@@ -46,20 +46,22 @@ class Product
     }
 
 
-    public function manageproductbycategory($id,$action){
-        if($action=='edit'){
-            $db=new DB_con(); 
-            $value = array();
-            $sql="SELECT * FROM `tbl_product` WHERE `id`='$id'";
-            $data=$db->conn->query($sql);
-            if($data->num_rows>0){
-                while($row=$data->fetch_assoc()){
-                    $value[] = $row;
-                }
+    public function editproductbycategory($id){
+        // echo "function";
+        $db=new DB_con(); 
+        $value = array();
+        $sql="SELECT * FROM `tbl_product` WHERE `id`='$id'";
+        $data=$db->conn->query($sql);
+        
+        if($data->num_rows>0){
+            while($row=$data->fetch_assoc()){
+                $value[] = $row;
             }
-            return $value;
         }
-        if($action=='delete'){
+        return $value;
+    }
+    public function deleteproductbycategory($id){
+       
             $db=new DB_con();
             $sql="DELETE FROM `tbl_product` WHERE `id`='$id'";
             $result=$db->conn->query($sql);
@@ -68,7 +70,6 @@ class Product
               } else {
                 return "false";
               }
-        }
     }
     public function update($id,$name,$link){
         $db=new DB_con();

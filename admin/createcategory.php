@@ -615,13 +615,11 @@ function showproduct(){
 }
 
 
-
-
 $('.modal-body').on('click','.update',function(){
   var id=$(this).data('id');
   var name=$('.name').val();
   var link=$('.link').val();
-  console.log(link);
+  // console.log(link);
   $.ajax({
                 url: '../inter.php',
                 method:'POST',
@@ -650,7 +648,6 @@ $('.modal-body').on('click','.update',function(){
 });
 
 
-
 $('#showproduct').on('click','#edit-product-by-category',function(){
   var id=$(this).data('id');
   var action="edit";
@@ -670,10 +667,9 @@ function manageproductbycategory(action,id){
     method: 'POST',
     data: {
       id: id,
-      action: action,
-      manageproductbycategory: true
+      act: action
     },
-    dataType: 'json',
+    dataType:'json',
     success: function(msg){
       if(msg=="true"){
         alert('deleted successfully');

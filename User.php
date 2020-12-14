@@ -1,5 +1,7 @@
-<?php include_once('admin/config.php');
+<?php 
+include_once('admin/config.php');
 $db=new DB_con();
+// session_start();
 class User
 {
 	public function login($email,$password)
@@ -9,38 +11,41 @@ class User
         $result=$db->conn->query($sql);
         $error ="";
         $success="";
-        if ($result->num_rows>0)
+        if ($result->num_rows > 0)
         {
-            while ($row = $result->fetch_assoc()) 
-        {
-            if($row['active']==1)
+            while($row = $result->fetch_assoc()) 
             {
-                    if($row['is_admin']==1)
-                    {            
-                        $_SESSION['admin'] = array('name'=>$row['name'],'id'=>$row['id']);
-
-                    }
-                     else 
-                    {
-                        $_SESSION['user'] = array('name'=>$row['name'],'user_id'=>$row['id']);
-                        
-                         
-                    }
-                    $success = "success";
-                    return $success;
-            }
-            else
-            {
-                $error="You are Not approved by admin";
-                return $error;
-
-            }
-
-        }
-                $error='Logged in success';
-                return $error;
+                if($row['active']==1)
+                { 
+                    
+                        if($row['is_admin']==1)
+                        {     
                            
-        } 
+                            $_SESSION['admin'] = array('name'=>$row['name'],'id'=>$row['id']);
+                            return "redirect admin";
+                            
+
+                        }
+                        else 
+                        {
+                            
+                            $_SESSION['user'] = array('name'=>$row['name'],'id'=>$row['id']);
+                            return "redirect user";  
+                                   
+                        }
+                }
+                else
+                {
+                    $error="You are Not approved by admin";
+                    return $error;
+
+                }
+
+            }
+                    $error='Logged in success';
+                    return $error;
+                            
+            } 
         else 
         {
             $error ='invalid details';

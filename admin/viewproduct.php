@@ -646,7 +646,7 @@ function editproductdata(id){
 
 
 </script>
-
+</body>
 </html>
 <?php 
 }

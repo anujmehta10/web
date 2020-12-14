@@ -128,7 +128,7 @@ $pro=new Product();
 										<input type="password" name="password" id="password" class="textinput"> 
 									  </div>
 									  <a class="forgot" href="#">Forgot Your Password?</a>
-									  <input type="button" nam="submit" id="submit" value="Login">
+									  <input type="button" name="submit" id="submit" value="Login">
 									</form>
 								</div>	
 								<div class="clearfix"> </div>
@@ -156,11 +156,13 @@ $pro=new Product();
 				                    email: email,
 				                    password: password    
 				                },
-				                datatype:'json',
+				                dataType:'json',
 				                success: function(result) {
-				                    //console.log(result);
-				                    //alert(result);
-				                   $(location).attr('href','admin/index.php');
+				                    if(result=="redirect admin"){
+										$(location).attr('href',"admin/index.php");
+									}else if(result=="redirect user"){
+										$(location).attr('href',"index.php");
+									}
 				               
 				                       },
 				                error:function(){
@@ -169,7 +171,7 @@ $pro=new Product();
 				            }); 
 				        }
 				        else{
-
+							alert("Enter credintials");
 				        }
 				    });
 

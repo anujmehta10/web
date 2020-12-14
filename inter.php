@@ -1,3 +1,4 @@
+<!-- <ADMIN INDEX FILE> -->
 <?php session_start();
 include_once('admin/config.php');
 $obj=new DB_con();
@@ -13,8 +14,8 @@ $pro=new Product();
     	$email=$_POST['email'];
     	$password=$_POST['password'];
       $result=$ob->login($email,$password);
-        $arr=$result;
-        echo json_encode($arr);
+      $arr=$result;
+      echo json_encode($arr);
       
     }
 
@@ -145,6 +146,25 @@ $pro=new Product();
         }
       }
 
+      if(isset($_POST['act'])){ 
+        if($_POST['act'] == "edit"){
+          $id=$_POST['id'];
+          // echo "id";
+          $result=$pro->editproductbycategory($id);
+          echo json_encode($result);
+      }
+  
+        if($_POST['act'] == "delete"){
+          $id=$_POST['id'];
+          $result=$pro->deleteproductbycategory($id);
+            if($result=='true'){
+              echo "true";
+            }
+            else if($result=='false'){
+              echo "false";
+            }
+        }
+      }
 
 
 
