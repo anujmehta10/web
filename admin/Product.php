@@ -138,8 +138,8 @@ class Product
                 $mail=$description->{'mail'};
                 $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['link'],$row['mon_price'],
                 $row['annual_price'],$row['sku'],$row['prod_available'],$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
-                data-id='".$row['prod_id']."' id='edit-product-by-category' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
-                class='btn btn-outline-danger' data-id='".$row['prod_id']."' id='delete-product-by-category'>DELETE
+                data-id='".$row['prod_id']."' id='vieweditproduct' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
+                class='btn btn-outline-danger' data-id='".$row['prod_id']."' id='viewdelproduct'>DELETE
                 </a>"); 
             }
         
@@ -161,10 +161,29 @@ class Product
                     $value[] = $row;
                 }
             }
+            $value = $value[0];
+            $value['description'] = json_decode($value['description']);
             return $value;
     }
 
+    public function updateviewproduct($id,$name,$link,$description,$mon_price,$annual_price,$sku){
+        $db=new DB_con();
+        $return="";
+        $sql="UPDATE `tbl_product` SET `prod_name`='$name', `link`='$link' WHERE `id`='$id'";
+        if ($db->conn->query($sql) == true)
+        {
+            $sqldesc="UPDATE `tbl_product_description` SET `description`='$description', `mon_price`='$mon_price', `annual_price`='$annual_price' WHERE `prod_id`='$id'";
+           $return = "true";
+        }
+         else
+        {
+            $return = "false";
+   
+         }
+         return $return;
 
+    }
+    
 
 
 

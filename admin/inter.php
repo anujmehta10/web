@@ -1,4 +1,3 @@
-<!-- </opt/lampp/htdocs/cedhosting/inter.php> Not Admin(onlu user) -->
 <?php session_start();
 include_once('admin/config.php');
 $obj=new DB_con();
@@ -7,6 +6,7 @@ $ob=new User();
 include_once('admin/Product.php');
 $pro=new Product();
 
+// echo"user index board";
 
   if(isset($_POST['login']))
     {

@@ -1,4 +1,3 @@
-<!-- <ADMIN INDEX FILE> -->
 <?php session_start();
 include_once('admin/config.php');
 $obj=new DB_con();
@@ -124,6 +123,9 @@ $pro=new Product();
         // echo $cat;
       }
 
+
+
+
       if(isset($_GET['viewproduct'])){
         $data=$pro->viewproduct();
         if($data!=false){
@@ -145,6 +147,9 @@ $pro=new Product();
           }
         }
       }
+
+
+
 
       if(isset($_POST['act'])){ 
         if($_POST['act'] == "edit"){
@@ -168,6 +173,46 @@ $pro=new Product();
 
 
 
+      if(isset($_POST['update'])){
+        $id=$_POST['id'];
+        $name=$_POST['name'];
+        $link=$_POST['link'];
+        //echo $link;
+        $result=$pro->update($id,$name,$link);
+        if($result=='true'){
+          echo json_encode("true");
+        }else{
+        echo json_encode("false");
+        }
+      }
+      if(isset($_POST['updateviewproduct'])){
+        $id=$_POST['id'];
+        $prod_name=$_POST['prod_name'];
+        $link=$_POST['link'];
+        $mon_price=$_POST['mon_price'];
+        $annual_price=$_POST['annual_price'];
+        $sku=$_POST['sku'];
+        $webs=$_POST['webspace'];
+        $band=$_POST['band'];
+        $domain=$_POST['domain'];
+        $lang=$_POST['lang'];
+        $mail=$_POST['mail'];
+        //echo $link;
+        $description=array(
+          "webspace"=>$webs,
+          "bandwidth"=>$band,
+          "domain"=>$domain,
+          "lang"=>$lang,
+          "mail"=>$mail,
+        );
+        $description=json_encode($description);
+        $result=$pro->updateviewproduct($id,$name,$link,$description,$mon_price,$annual_price,$sku);
+        if($result=='true'){
+          echo json_encode("true");
+        }else{
+        echo json_encode("false");
+        }
+      }
 
 
 
