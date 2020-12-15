@@ -60,6 +60,9 @@ class Product
         }
         return $value;
     }
+
+
+    
     public function deleteproductbycategory($id){
        
             $db=new DB_con();
@@ -137,14 +140,12 @@ class Product
                 $language=$description->{'lang'};
                 $mail=$description->{'mail'};
                 $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['link'],$row['mon_price'],
-                $row['annual_price'],$row['sku'],$row['prod_available'],$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
+                $row['annual_price'],$row['sku'],$available,$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
                 data-id='".$row['prod_id']."' id='vieweditproduct' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
                 class='btn btn-outline-danger' data-id='".$row['prod_id']."' id='viewdelproduct'>DELETE
                 </a>"); 
             }
-        
             return $arr;
-        
         }
    
     }
@@ -165,15 +166,37 @@ class Product
             $value['description'] = json_decode($value['description']);
             return $value;
     }
-
-    public function updateviewproduct($id,$name,$link,$description,$mon_price,$annual_price,$sku){
+    public function delproductdata($id){
         $db=new DB_con();
         $return="";
-        $sql="UPDATE `tbl_product` SET `prod_name`='$name', `link`='$link' WHERE `id`='$id'";
-        if ($db->conn->query($sql) == true)
+        $sql="DELETE FROM `tbl_product` WHERE `id`='$id'";
+        $sqli="DELETE FROM `tbl_product_description` WHERE `prod_id`='$id'";
+        if ($db->conn->query($sql) == true && $db->conn->query($sqli) == TRUE)
         {
-            $sqldesc="UPDATE `tbl_product_description` SET `description`='$description', `mon_price`='$mon_price', `annual_price`='$annual_price' WHERE `prod_id`='$id'";
-           $return = "true";
+            $return = "true";
+        }
+         else
+        {
+            $return = "false";
+        }
+         return $return;
+    }
+
+
+
+
+
+
+
+
+    public function updateviewproduct($id,$prod_name,$link,$description,$mon_price,$annual_price,$sku){
+        $db=new DB_con();
+        $return="";
+        $sql="UPDATE `tbl_product` SET `prod_name`='$prod_name', `link`='$link' WHERE `id`='$id'";
+        $sqldesc="UPDATE `tbl_product_description` SET `description`='$description', `mon_price`='$mon_price', `annual_price`='$annual_price', `sku`='$sku' WHERE `prod_id`='$id'";
+        if ($db->conn->query($sql) == true && $db->conn->query($sqldesc) == true)
+        {
+        $return = "true";
         }
          else
         {

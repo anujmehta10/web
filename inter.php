@@ -137,13 +137,26 @@ $pro=new Product();
         if($_POST['action'] == "edit") {
           $id=$_POST['id'];
           $result=$pro->editproductdata($id);
+          $fetch_category=$pro->nav();
+          $alldata=array('product'=>$result, 'category'=>$fetch_category);
+          // if($result=='true'){
+          //   echo json_encode("true");
+          // }
+          // else if($result=='false'){
+          //   echo json_encode("false");
+          // }else{
+           echo json_encode($alldata);
+          // }
+        }
+        // }
+        if($_POST['action']=="del"){
+          $id=$_POST['id'];
+          $result=$pro->delproductdata($id);
           if($result=='true'){
-            echo json_encode("true");
+            echo "true";
           }
           else if($result=='false'){
-            echo json_encode("false");
-          }else{
-           echo json_encode($result);
+            echo "false";
           }
         }
       }
@@ -206,7 +219,7 @@ $pro=new Product();
           "mail"=>$mail,
         );
         $description=json_encode($description);
-        $result=$pro->updateviewproduct($id,$name,$link,$description,$mon_price,$annual_price,$sku);
+        $result=$pro->updateviewproduct($id,$prod_name,$link,$description,$mon_price,$annual_price,$sku);
         if($result=='true'){
           echo json_encode("true");
         }else{

@@ -349,8 +349,8 @@ if(isset($_SESSION['admin'])){
               <table id="viewproduct" class="table align-items-center table-flush" style="width:100%">
                 <thead class="thead-light">
                     <tr>
+                        <th>Category</th>
                         <th>Product Name</th>
-                        <th>Category Name</th>
                         <th>Link</th>
                         <th>Monthly Price</th>
                         <th>Annual Price</th>
@@ -408,6 +408,36 @@ $('#viewproduct').on('click','#vieweditproduct',function(){
   editproductdata(id);
 });
 
+$('#viewproduct').on('click','#viewdelproduct',function(){
+  var id=$(this).data('id');
+  // console.log(id);
+  delproductdata(id);
+});
+function delproductdata(id){
+$.ajax({
+  url: '../inter.php',
+    method: 'POST',
+    data: {
+      id: id,
+      action: "del"
+    },
+    dataType:'json',
+    success: function(msg){
+      if(msg=="true"){
+        alert('deleted successfully');
+        location.reload();
+      }
+      else if(msg=="false"){
+        alert("delete failed");
+      }
+    },
+    error: function(){
+      alert("error in deletion");
+    }
+});
+}
+
+
 function editproductdata(id){  
   $.ajax({
     url: '../inter.php',
@@ -441,13 +471,16 @@ function editproductdata(id){
                 </span>\
               </label>\
               <div id="cid_3" class="form-input-wide jf-required" data-layout="half">\
-                <select class="cat form-dropdown validate[required]" id="input_3" value="'+msg['cat']+'" name="q3_selectProduct" style="width:310px" data-component="dropdown" required="" aria-labelledby="label_3">\
-                  <option value="" selected disabled> Please Select </option>\
-                  <!-- <option value="Linux Hosting"> Linux Hosting </option>\
-                  <option value="Windows Hosting"> Windows Hosting </option>\
-                  <option value="CMS Hosting"> CMS Hosting </option>\
-                  <option value="WordPress Hosting"> WordPress Hosting </option> -->\
-                </select>\
+                <select class="cat form-dropdown validate[required]" id="input_3" name="q3_selectProduct" style="width:310px" data-component="dropdown" required="" aria-labelledby="label_3">\
+                  <option value="" selected disabled> Please Select </option>';
+                  for(var i=0;i<msg.category.length;i++){
+                    if(msg.category[i]['id']==msg.product['product_parent_id']){
+                      html+='<option value="'+msg.product["prod_name"]+'" selected>'+msg.category[i]["prod_name"]+'</option>';
+                    }else{
+                      html+='<option value="'+msg.product["prod_name"]+'">'+msg.category[i]["prod_name"]+'</option>';
+                    }
+                  }
+               html+='</select>\
               </div>\
             </li>\
             <li class="form-line jf-required" data-type="control_textbox" id="id_4">\
@@ -458,13 +491,13 @@ function editproductdata(id){
                 </span>\
               </label>\
               <div id="cid_4" class="form-input-wide jf-required" data-layout="half">\
-                <input type="text" id="prod_name input_4 " name="q4_enterProduct" data-type="input-textbox" value="'+msg['prod_name']+'" class="pro_name form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_4" required="" />\
+                <input type="text" id="input_4 " name="q4_enterProduct" data-type="input-textbox" value="'+msg['product']['prod_name']+'" class="prod_name form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_4" required="" />\
               </div>\
             </li>\
             <li class="form-line" data-type="control_textbox" id="id_5">\
               <label class="form-label form-label-top form-label-auto" id="label_5" for="input_5"> Page URL </label>\
               <div id="cid_5" class="form-input-wide" data-layout="half">\
-                <input type="text" id="link input_5 " name="q5_pageUrl" data-type="input-textbox" value="'+msg['link']+'" class="url form-textbox" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_5" />\
+                <input type="text" id="input_5 " name="q5_pageUrl" data-type="input-textbox" value="'+msg['product']['link']+'" class="link form-textbox" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_5" />\
               </div>\
             </li>\
             <li class="form-line" data-type="control_divider" id="id_8">\
@@ -494,7 +527,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_11" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="number" id="mon_price input_11 " value="'+msg['mon_price']+'" name="q11_enterMonthly" data-type="input-number" class="m_price form-number-input form-textbox validate[required]" style="width:310px" size="310" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_11 sublabel_input_11" required="" step="any" />\
+                  <input type="number" id="input_11 " value="'+msg['product']['mon_price']+'" name="q11_enterMonthly" data-type="input-number" class="mon_price form-number-input form-textbox validate[required]" style="width:310px" size="310" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_11 sublabel_input_11" required="" step="any" />\
                   <label class="form-sub-label" for="input_11" id="sublabel_input_11" style="min-height:13px" aria-hidden="false"> This would be Monthly Plan </label>\
                 </span>\
               </div>\
@@ -508,7 +541,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_12" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="number" id="annual_price input_12" value="'+msg['annual_price']+'" name="q12_enterAnnual" data-type="input-number" class="a_price form-number-input form-textbox validate[required]" style="width:310px" size="310" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_12 sublabel_input_12" required="" step="any" />\
+                  <input type="number" id="input_12" value="'+msg['product']['annual_price']+'" name="q12_enterAnnual" data-type="input-number" class="annual_price form-number-input form-textbox validate[required]" style="width:310px" size="310" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_12 sublabel_input_12" required="" step="any" />\
                   <label class="form-sub-label" for="input_12" id="sublabel_input_12" style="min-height:13px" aria-hidden="false"> This would be Annual Price </label>\
                 </span>\
               </div>\
@@ -521,7 +554,7 @@ function editproductdata(id){
                 </span>\
               </label>\
               <div id="cid_13" class="form-input-wide jf-required" data-layout="half">\
-                <input type="text" id="sku input_13" name="q13_sku" value="'+msg['sku']+'" data-type="input-textbox" class="sku form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_13" required="" />\
+                <input type="text" id="input_13" name="q13_sku" value="'+msg['product']['sku']+'" data-type="input-textbox" class="sku form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_13" required="" />\
               </div>\
             </li>\
             <li class="form-line" data-type="control_divider" id="id_14">\
@@ -548,7 +581,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_16" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="text" id="webspace input_16" value="'+msg['description']['webspace']+'" name="q16_webSpacein" data-type="input-textbox" class="webs form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_16 sublabel_input_16" required="" />\
+                  <input type="text" id="input_16" value="'+msg['product']['description']['webspace']+'" name="q16_webSpacein" data-type="input-textbox" class="webspace form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_16 sublabel_input_16" required="" />\
                   <label class="form-sub-label" for="input_16" id="sublabel_input_16" style="min-height:13px" aria-hidden="false"> Enter 0.5 for 512 MB </label>\
                 </span>\
               </div>\
@@ -562,7 +595,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_17" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="text" id="band input_17" value="'+msg['description']['bandwidth']+'" name="q17_bandwidthin" data-type="input-textbox" class="band form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_17 sublabel_input_17" required="" />\
+                  <input type="text" id="input_17" value="'+msg['product']['description']['bandwidth']+'" name="q17_bandwidthin" data-type="input-textbox" class="band form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_17 sublabel_input_17" required="" />\
                   <label class="form-sub-label" for="input_17" id="sublabel_input_17" style="min-height:13px" aria-hidden="false"> Enter 0.5 for 512 MB </label>\
                 </span>\
               </div>\
@@ -576,7 +609,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_18" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="text" id="domain input_18" value="'+msg['description']['domain']+'" name="q18_freeDomain" data-type="input-textbox" class="domain form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_18 sublabel_input_18" required="" />\
+                  <input type="text" id="input_18" value="'+msg['product']['description']['domain']+'" name="q18_freeDomain" data-type="input-textbox" class="domain form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_18 sublabel_input_18" required="" />\
                   <label class="form-sub-label" for="input_18" id="sublabel_input_18" style="min-height:13px" aria-hidden="false"> Enter 0 if no domain available in this service </label>\
                 </span>\
               </div>\
@@ -590,7 +623,7 @@ function editproductdata(id){
               </label>\
               <div id="cid_19" class="form-input-wide jf-required" data-layout="half">\
                 <span class="form-sub-label-container" style="vertical-align:top">\
-                  <input type="text" id="lang input_19" value="'+msg['description']['lang']+'" name="q19_language" data-type="input-textbox" class="language form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_19 sublabel_input_19" required="" />\
+                  <input type="text" id="input_19" value="'+msg['product']['description']['lang']+'" name="q19_language" data-type="input-textbox" class="lang form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_19 sublabel_input_19" required="" />\
                   <label class="form-sub-label" for="input_19" id="sublabel_input_19" style="min-height:13px" aria-hidden="false"> Separate by (,) Ex: PHP, MySQL, MongoDB </label>\
                 </span>\
               </div>\
@@ -604,7 +637,7 @@ function editproductdata(id){
         </label>\
         <div id="cid_20" class="form-input-wide jf-required" data-layout="half">\
           <span class="form-sub-label-container" style="vertical-align:top">\
-            <input type="text" id="input_20" value="'+msg['description']['mail']+'" name="q20_mailbox" data-type="input-textbox" class="mail form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_20 sublabel_input_20" required="" />\
+            <input type="text" id="input_20" value="'+msg['product']['description']['mail']+'" name="q20_mailbox" data-type="input-textbox" class="mail form-textbox validate[required]" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_20 sublabel_input_20" required="" />\
             <label class="form-sub-label" for="input_20" id="sublabel_input_20" style="min-height:13px" aria-hidden="false"> Enter Number of mailbox will be provided, enter 0 if none </label>\
           </span>\
         </div>\
@@ -612,7 +645,7 @@ function editproductdata(id){
       <li class="form-line" data-type="control_button" id="id_2">\
         <div id="cid_2" class="form-input-wide" data-layout="full">\
           <div data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField">\
-            <button id="input_2" type="button" data-id="'+msg['prod_id']+'" class="updateproduct form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button" data-content="">\
+            <button id="input_2" type="button" data-id="'+msg['product']['prod_id']+'" class="updateproduct form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button" data-content="">\
               Create Now\
             </button>\
           </div>\
@@ -634,17 +667,28 @@ function editproductdata(id){
 }
 $('#modal').on('click','.updateproduct',function(){
   // $row=$product->extract();
-  var id=$(this).data('prod_id');
-  var prod_name=$('#modal #prod_name').val();
-  var link=$('#modal #link').val();
-  var mon_price=$('#modal #mon_price').val();
-  var annual_price=$('#modal #annual_price').val();
-  var sku=$('#modal #sku').val();
-  var webspace=$('#modal #webspace').val();
-  var band=$('#modal #band').val();
-  var domain=$('#modal #domain').val();
-  var lang=$('#modal #lang').val();
-  var mail=$('#modal #mail').val();
+  var id=$(this).data('id');
+  var prod_name=$('.prod_name').val();
+  var link=$('.link').val();
+  var mon_price=$('.mon_price').val();
+  var annual_price=$('.annual_price').val();
+  var sku=$('.sku').val();
+  var webspace=$('.webspace').val();
+  var band=$('.band').val();
+  var domain=$('.domain').val();
+  var lang=$('.lang').val();
+  var mail=$('.mail').val();
+  // console.log(prod_name);
+  // console.log(link);
+  // console.log(mon_price);
+  // console.log(annual_price);
+  // console.log(sku);
+  // console.log(webspace);
+  // console.log(band);
+  // console.log(domain);
+  // console.log(lang);
+  // console.log(mail);
+  //  console.log(id);
 
   $.ajax({
                 url: '../inter.php',
