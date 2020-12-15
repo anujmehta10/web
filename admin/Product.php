@@ -11,7 +11,7 @@ class Product
     public function category($category,$link){
         $db=new DB_con();
         $return="";
-        $sql="INSERT INTO `tbl_product`(`prod_parent_id`,`prod_name`,`link`,`prod_available`,`prod_launch_date`)VALUES('1','$category','$link','0',NOW())";
+        $sql="INSERT INTO `tbl_product`(`prod_parent_id`,`prod_name`,`html`,`prod_available`,`prod_launch_date`)VALUES('1','$category','$link','0',NOW())";
         if ($db->conn->query($sql) === TRUE) {
             $return= "New record created successfully";
           } else {
@@ -32,7 +32,7 @@ class Product
                 else{
                     $available="unavailable";
                 }
-                $arr['data'][]=array($row['id'],$row['prod_parent_id'],$row['prod_name'],$row['link'],
+                $arr['data'][]=array($row['id'],$row['prod_parent_id'],$row['prod_name'],$row['html'],
                 $available,$row['prod_launch_date'],"<a href='javascript:void(0)' class='btn btn-outline-info'
                 data-id='".$row['id']."' id='edit-product-by-category' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
                 class='btn btn-outline-danger' data-id='".$row['id']."' id='delete-product-by-category'>DELETE
@@ -40,6 +40,7 @@ class Product
             }
             return $arr;
         }
+        
         return false;
 
 
@@ -77,19 +78,18 @@ class Product
     public function update($id,$name,$link){
         $db=new DB_con();
         $return="";
-        $sql="UPDATE `tbl_product` SET `prod_name`='$name', `link`='$link' WHERE `id`='$id'";
-        if ($db->conn->query($sql) == true)
+        $sql="UPDATE `tbl_product` SET `prod_name`='$name', `html`='$link' WHERE `id`='$id'";
+        if ($db->conn->query($sql) == TRUE)
         {
            $return = "true";
         }
          else
         {
             $return = "false";
-   
-         }
+        }
          return $return;
-
     }
+    
     public function nav(){
         $db=new DB_con();
         $sql="SELECT * FROM `tbl_product` WHERE `prod_parent_id`='1'";
@@ -105,7 +105,7 @@ class Product
 
     public function addpro($cat,$pro_name,$url,$description,$m_price,$a_price,$sku){
         $db=new DB_con();
-        $insert="INSERT INTO `tbl_product`(`prod_parent_id`,`prod_name`,`link`,`prod_available`,`prod_launch_date`) VALUES 
+        $insert="INSERT INTO `tbl_product`(`prod_parent_id`,`prod_name`,`html`,`prod_available`,`prod_launch_date`) VALUES 
         ('$cat','$pro_name','$url','0',NOW())";
         if ($db->conn->query($insert) === TRUE) {
             $last_id=$db->conn->insert_id;
@@ -139,7 +139,7 @@ class Product
                 $domain=$description->domain;
                 $language=$description->{'lang'};
                 $mail=$description->{'mail'};
-                $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['link'],$row['mon_price'],
+                $arr['data'][]=array($row['prod_parent_id'],$row['prod_name'],$row['html'],$row['mon_price'],
                 $row['annual_price'],$row['sku'],$available,$row['prod_launch_date'],$webs,$band,$domain,$language,$mail,"<a href='javascript:void(0)' class='btn btn-outline-info'
                 data-id='".$row['prod_id']."' id='vieweditproduct' data-toggle='modal' data-target='#exampleModal'>Edit</a> <a href='javascript:void(0)' 
                 class='btn btn-outline-danger' data-id='".$row['prod_id']."' id='viewdelproduct'>DELETE
@@ -182,27 +182,19 @@ class Product
          return $return;
     }
 
-
-
-
-
-
-
-
     public function updateviewproduct($id,$prod_name,$link,$description,$mon_price,$annual_price,$sku){
         $db=new DB_con();
         $return="";
-        $sql="UPDATE `tbl_product` SET `prod_name`='$prod_name', `link`='$link' WHERE `id`='$id'";
+        $sql="UPDATE `tbl_product` SET `prod_name`='$prod_name', `html`='$link' WHERE `id`='$id'";
         $sqldesc="UPDATE `tbl_product_description` SET `description`='$description', `mon_price`='$mon_price', `annual_price`='$annual_price', `sku`='$sku' WHERE `prod_id`='$id'";
         if ($db->conn->query($sql) == true && $db->conn->query($sqldesc) == true)
         {
-        $return = "true";
+            $return = "true";
         }
          else
         {
             $return = "false";
-   
-         }
+        }
          return $return;
 
     }

@@ -17,9 +17,7 @@ $pro=new Product();
 <script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
 						<script type="text/javascript">
 							$(function() {
-							
 								$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
-
 							});
 						</script>						
 <!--script-->
@@ -49,7 +47,7 @@ $pro=new Product();
 								<li <?php if($filename=='index.php'):?>class="active"<?php endif;?>><a href="index.php">Home </a></li>
 								<li <?php if($filename=='about.php'):?>class="active"<?php endif;?>><a href="about.php">About</a></li>
 								<li <?php if($filename=='services.php'):?>class="active"<?php endif;?>><a href="services.php">Services</a></li>
-								<li <?php if($filename=='linuxhosting.php' ||$filename=='wordpresshosting.php' ||$filename=='windowshosting.php'||$filename=='cmshosting.php' ):?>class="dropdown active"<?php endif;?>>
+								<li <?php if($filename=='linuxhosting.php' ||$filename=='wordpresshosting.php' ||$filename=='windowshosting.php'||$filename=='cmshosting.php' ) :?>class="dropdown active"<?php endif;?>>
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
 										<!-- <li><a href="linuxhosting.php">Linux hosting</a></li>

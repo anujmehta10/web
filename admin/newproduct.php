@@ -736,6 +736,7 @@ $(document).ready(function(){
                success: function(result)
                 {
                       alert(result);  
+                      location.reload();
                 },
                 error:function()
                 {

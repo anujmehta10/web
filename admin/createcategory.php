@@ -585,6 +585,7 @@ if(isset($_SESSION['admin'])){
 $('#submit').click(function(){
   var link=$('#link').val();
   var category=$('#category').val();
+  if(link!="" && category!=""){
   $.ajax({
 			   url: '../inter.php',
 				 type:'POST',
@@ -597,12 +598,18 @@ $('#submit').click(function(){
 					    },					              					         
 				success: function(result) {
 				//console.log(result);
-				alert(result);                  
+				alert(result);  
+        location.reload();                
 				 },
 				error:function(){
 			  alert("error");
 				 }
      }); 
+  }else{
+    alert("Enter Valid Details");
+    location.reload();
+  }
+
 });
 
 $(document).ready(function(){
@@ -635,6 +642,7 @@ $('.modal-body').on('click','.update',function(){
                   if(result=="true")
                   {
                     alert("Updated");
+                    location.reload();
                   }  
                   else{
                     alert("not updated");
@@ -659,6 +667,7 @@ $('#showproduct').on('click','#delete-product-by-category',function(){
   var r=confirm("are you sure you want to delete?");
   if(r){
     manageproductbycategory(action,id);
+    location.reload();
   }
 });
 function manageproductbycategory(action,id){
@@ -673,7 +682,6 @@ function manageproductbycategory(action,id){
     success: function(msg){
       if(msg=="true"){
         alert('deleted successfully');
-        location.reload();
       }
       else if(msg=="false"){
         alert("delete failed");
@@ -702,7 +710,7 @@ function manageproductbycategory(action,id){
                     <div class="input-group-prepend">\
                       <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>\
                     </div>\
-                    <input class="link form-control" placeholder="link" type="url" value="'+msg[i]['link']+'" id="link">\
+                    <input class="link form-control" placeholder="link" type="url" value="'+msg[i]['html']+'" id="link">\
                   </div>\
                 </div>\
                 <div class="row my-4">\

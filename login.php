@@ -163,7 +163,7 @@ $pro=new Product();
 									}else if(result=="redirect user"){
 										$(location).attr('href',"index.php");
 									}
-				               
+											alert(result);
 				                       },
 				                error:function(){
 				                    alert("error");

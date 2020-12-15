@@ -349,7 +349,7 @@ if(isset($_SESSION['admin'])){
               <table id="viewproduct" class="table align-items-center table-flush" style="width:100%">
                 <thead class="thead-light">
                     <tr>
-                        <th>Category</th>
+                        <th>Prod_parent_id</th>
                         <th>Product Name</th>
                         <th>Link</th>
                         <th>Monthly Price</th>
@@ -411,7 +411,11 @@ $('#viewproduct').on('click','#vieweditproduct',function(){
 $('#viewproduct').on('click','#viewdelproduct',function(){
   var id=$(this).data('id');
   // console.log(id);
-  delproductdata(id);
+  // delproductdata(id);
+  var r=confirm("are you sure you want to delete?");
+  if(r){
+    delproductdata(id);
+  }
 });
 function delproductdata(id){
 $.ajax({
@@ -430,6 +434,7 @@ $.ajax({
       else if(msg=="false"){
         alert("delete failed");
       }
+      location.reload();
     },
     error: function(){
       alert("error in deletion");
@@ -475,9 +480,9 @@ function editproductdata(id){
                   <option value="" selected disabled> Please Select </option>';
                   for(var i=0;i<msg.category.length;i++){
                     if(msg.category[i]['id']==msg.product['product_parent_id']){
-                      html+='<option value="'+msg.product["prod_name"]+'" selected>'+msg.category[i]["prod_name"]+'</option>';
+                      html+='<option value="'+msg.category[i]["prod_name"]+'" selected>'+msg.category[i]["prod_name"]+'</option>';
                     }else{
-                      html+='<option value="'+msg.product["prod_name"]+'">'+msg.category[i]["prod_name"]+'</option>';
+                      html+='<option value="'+msg.category[i]["prod_name"]+'">'+msg.category[i]["prod_name"]+'</option>';
                     }
                   }
                html+='</select>\
@@ -497,7 +502,7 @@ function editproductdata(id){
             <li class="form-line" data-type="control_textbox" id="id_5">\
               <label class="form-label form-label-top form-label-auto" id="label_5" for="input_5"> Page URL </label>\
               <div id="cid_5" class="form-input-wide" data-layout="half">\
-                <input type="text" id="input_5 " name="q5_pageUrl" data-type="input-textbox" value="'+msg['product']['link']+'" class="link form-textbox" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_5" />\
+                <input type="text" id="input_5 " name="q5_pageUrl" data-type="input-textbox" value="'+msg['product']['html']+'" class="link form-textbox" style="width:310px" size="310" value="" data-component="textbox" aria-labelledby="label_5" />\
               </div>\
             </li>\
             <li class="form-line" data-type="control_divider" id="id_8">\
@@ -659,6 +664,7 @@ function editproductdata(id){
         </div>\
         </form>';
          $('#modal').html(html);
+        
     },
     error: function(){
       alert("error");
@@ -717,6 +723,7 @@ $('#modal').on('click','.updateproduct',function(){
                   else{
                     alert("not updated");
                   }
+                  location.reload();
                 },
                 error:function()
                 {
@@ -724,12 +731,6 @@ $('#modal').on('click','.updateproduct',function(){
                 }
             }); 
 });
-
-
-
-
-
-
 
 
 

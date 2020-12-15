@@ -153,10 +153,10 @@ $pro=new Product();
           $id=$_POST['id'];
           $result=$pro->delproductdata($id);
           if($result=='true'){
-            echo "true";
+            echo json_encode("true");
           }
           else if($result=='false'){
-            echo "false";
+            echo json_encode("false");
           }
         }
       }
@@ -186,18 +186,22 @@ $pro=new Product();
 
 
 
-      if(isset($_POST['update'])){
-        $id=$_POST['id'];
-        $name=$_POST['name'];
-        $link=$_POST['link'];
-        //echo $link;
-        $result=$pro->update($id,$name,$link);
-        if($result=='true'){
-          echo json_encode("true");
-        }else{
-        echo json_encode("false");
-        }
-      }
+      // if(isset($_POST['update'])){
+      //   $id=$_POST['id'];
+      //   $name=$_POST['name'];
+      //   $link=$_POST['link'];
+      //   //echo $link;
+      //   $result=$pro->update($id,$name,$link);
+      //   if($result=="true"){
+      //     echo("true");
+      //   }else{
+      //     echo("false");
+      //   }
+      // }
+
+
+
+
       if(isset($_POST['updateviewproduct'])){
         $id=$_POST['id'];
         $prod_name=$_POST['prod_name'];
