@@ -72,7 +72,7 @@ $pro=new Product();
 										$data=$pro->nav();
 										if($data!=false){
 											for($i=0;$i<count($data);$i++){
-												echo '<li><a href="#">'.$data[$i]['prod_name'].'</a></li>';
+												echo '<li><a href="catpage.php">'.$data[$i]['prod_name'].'</a></li>';
 
 											}
 										}

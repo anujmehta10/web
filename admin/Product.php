@@ -166,6 +166,8 @@ class Product
             $value['description'] = json_decode($value['description']);
             return $value;
     }
+
+
     public function delproductdata($id){
         $db=new DB_con();
         $return="";
@@ -198,7 +200,63 @@ class Product
          return $return;
 
     }
+    public function getpageheading($id){
+        $db=new DB_con();
+        $return="";
+        $sql="SELECT * FROM `tbl_product` WHERE `id`='$id'";
+        $data=$db->conn->query($sql);
+        if($data->num_rows>0){
+            while($row=$data->fetch_assoc()){
+            return $row;
+            }
+        }
+    }
+
+    public function getcatpagedata($id){
+        $db=new DB_con(); 
+        // echo $id;
+        $sql="SELECT `tbl_product`.*,`tbl_product_description`.* FROM
+         tbl_product JOIN tbl_product_description ON `tbl_product`.`id` =
+          `tbl_product_description`.`prod_id` WHERE `tbl_product`.`prod_parent_id`='$id'";
+        // $sql="SELECT * FROM `tbl_product` WHERE `id`='$id'";
+        $data=$db->conn->query($sql);
+        if($data->num_rows>0) {
+            $arr=array();
+            while($row=$data->fetch_assoc()){
+                if($row['prod_available']=='0'){
+                    continue;
+                }else{
+                    $available="available";
+                }
+                $decoded_description=json_decode($row['description']);
+                $webspace=$decoded_description->{'webspace'};
+                $bandwidth=$decoded_description->{'bandwidth'};
+                $domain=$decoded_description->{'domain'};
+                $language=$decoded_description->{'lang'};
+                $mailbox=$decoded_description->{'mail'};
+                $arr[]=array(
+                    "prod_id"=>$row['prod_id'],
+                    "sku"=>$row['sku'],
+                    "mon_price"=>$row['mon_price'],
+                    "annual_price"=>$row['annual_price'],
+                    "prod_parent_id"=>$row['prod_parent_id'],
+                    "prod_name"=>$row['prod_name'],
+                    "link"=>$row['html'],
+                    "available"=>$available,
+                    "prod_launch_date"=>$row['prod_launch_date'],
+                    "webspace"=>$webspace,
+                    "bandwidth"=>$bandwidth,
+                    "domain"=>$domain,
+                    "language"=>$language,
+                    "mailbox"=>$mailbox
+                );
+            }
+            return $arr;
+        }
+        return false;
+    }
     
+
 
 
 

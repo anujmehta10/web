@@ -1,679 +1,524 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<?php include('header.php');
-include_once('admin/Product.php');
-$pro=new Product();
+<?php session_start();
+include_once('config.php');
+include_once('Product.php');
+$obj=new DB_con();
+$message="";
+$errors=array();
+$r=false;
+
+if(isset($_SESSION['user'])){
+  header('location:login.php');
+}  
+else{
+  $r=false;
+}
+if(isset($_SESSION['admin'])){
+
+  include('header1.php');
 ?>
-<!---fonts-->
-<!--script-->
-<script src="js/modernizr.custom.97074.js"></script>
-<script src="js/jquery.chocolat.js"></script>
-<link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
-<!--lightboxfiles-->
-<script type="text/javascript">
-	$(function() {
-	$('.team a').Chocolat();
-	});
-</script>	
-<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
-						<script type="text/javascript">
-							$(function() {
-							
-								$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
 
-							});
-						</script>						
-<!--script-->
-</head>
+
 <body>
-	<!---header--->
-		<div class="header">
-			<div class="container">
-				<nav class="navbar navbar-default">
-					<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-								<i class="sr-only">Toggle navigation</i>
-								<i class="icon-bar"></i>
-								<i class="icon-bar"></i>
-								<i class="icon-bar"></i>
-							</button>				  
-							<div class="navbar-brand">
-								<h1><a href="index.php"><img src="logo.png" width="160px" height="95px"/></a></h1>
-							</div>
-						</div>
+  <!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand" href="javascript:void(0)">
+          <img src="logo.png" class="navbar-brand-img" width="90px" height="125px">
+        </a>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <a class="nav-link active" href="../logout.php">
+                <i class="ni ni-tv-2 text-primary"></i>
+                <span class="nav-link-text">Dashboard</span>
+          </a>
+          <!-- Divider -->
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Products</span>
+          </h6>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="createcategory.php">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Create Category</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="newproduct.php">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Add Product</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="viewproduct.php">
+                <i class="ni ni-single-02 text-yellow"></i>
+                <span class="nav-link-text">View Products</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/tables.html">
+                <i class="ni ni-bullet-list-67 text-default"></i>
+                <span class="nav-link-text">Create New Offers</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Divider -->
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Orders</span>
+          </h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Pending Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Completed Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/profile.html">
+                <i class="ni ni-single-02 text-yellow"></i>
+                <span class="nav-link-text">Cancelled Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/tables.html">
+                <i class="ni ni-bullet-list-67 text-default"></i>
+                <span class="nav-link-text">Generate Invoice</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Divider -->
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Services</span>
+          </h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Active Services</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Expired Services</span>
+              </a>
+            </li>
+          </ul>
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Users</span>
+          </h6>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">All User List</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Create New User</span>
+              </a>$ob=new User();
+            </li>
+          </ul>
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Blog</span>
+          </h6>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Add New Blog</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">View all Blogs</span>
+              </a>
+            </li>
+          </ul>
+          <hr class="my-3">
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Accounts</span>
+          </h6>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-planet text-orange"></i>
+                <span class="nav-link-text">Update Company Info</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Change Security Ques</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/map.html">
+                <i class="ni ni-pin-3 text-primary"></i>
+                <span class="nav-link-text">Change Password</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Search form -->
+          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+            <div class="form-group mb-0">
+              <div class="input-group input-group-alternative input-group-merge">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+                <input class="form-control" placeholder="Search" type="text">
+              </div>
+            </div>
+            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </form>
+          <!-- Navbar links -->
+          <ul class="navbar-nav align-items-center  ml-md-auto ">
+            <li class="nav-item d-xl-none">
+              <!-- Sidenav toggler -->
+              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item d-sm-none">
+              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+                <i class="ni ni-zoom-split-in"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ni ni-bell-55"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
+                <!-- Dropdown header -->
+                <div class="px-3 py-3">
+                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
+                </div>
+                <!-- List group -->
+                <div class="list-group list-group-flush">
+                  <a href="#!" class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img alt="Image placeholder" src="assets/img/theme/team-1.jpg" class="avatar rounded-circle">
+                      </div>
+                      <div class="col ml--2">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h4 class="mb-0 text-sm">Tony Stark</h4>
+                          </div>
+                          <div class="text-right text-muted">
+                            <small>2 hrs ago</small>
+                          </div>
+                        </div>
+                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img alt="Image placeholder" src="linux.png" class="avatar rounded-circle">
+                      </div>
+                      <div class="col ml--2">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h4 class="mb-0 text-sm">John Snow</h4>
+                          </div>
+                          <div class="text-right text-muted">
+                            <small>3 hrs ago</small>
+                          </div>
+                        </div>
+                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img alt="Image placeholder" src="assets/img/theme/team-3.jpg" class="avatar rounded-circle">
+                      </div>
+                      <div class="col ml--2">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h4 class="mb-0 text-sm">John Snow</h4>
+                          </div>
+                          <div class="text-right text-muted">
+                            <small>5 hrs ago</small>
+                          </div>
+                        </div>
+                        <p class="text-sm mb-0">Your posts have been liked a lot.</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img alt="Image placeholder" src="assets/img/theme/team-4.jpg" class="avatar rounded-circle">
+                      </div>
+                      <div class="col ml--2">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h4 class="mb-0 text-sm">John Snow</h4>
+                          </div>
+                          <div class="text-right text-muted">
+                            <small>2 hrs ago</small>
+                          </div>
+                        </div>
+                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
+                      </div>
+                    </div>
+                  </a>
+                  <a href="#!" class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img alt="Image placeholder" src="assets/img/theme/team-5.jpg" class="avatar rounded-circle">
+                      </div>
+                      <div class="col ml--2">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <h4 class="mb-0 text-sm">John Snow</h4>
+                          </div>
+                          <div class="text-right text-muted">
+                            <small>3 hrs ago</small>
+                          </div>
+                        </div>
+                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- View all -->
+                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ni ni-ungroup"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
+                <div class="row shortcuts px-4">
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
+                      <i class="ni ni-calendar-grid-58"></i>
+                    </span>
+                    <small>Calendar</small>
+                  </a>
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
+                      <i class="ni ni-email-83"></i>
+                    </span>
+                    <small>Email</small>
+                  </a>
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
+                      <i class="ni ni-credit-card"></i>
+                    </span>
+                    <small>Payments</small>
+                  </a>
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
+                      <i class="ni ni-books"></i>
+                    </span>
+                    <small>Reports</small>
+                  </a>
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
+                      <i class="ni ni-pin-3"></i>
+                    </span>
+                    <small>Maps</small>
+                  </a>
+                  <a href="#!" class="col-4 shortcut-item">
+                    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
+                      <i class="ni ni-basket"></i>
+                    </span>
+                    <small>Shop</small>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+            <li class="nav-item dropdown">
+              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="media align-items-center">
+                  <span class="avatar avatar-sm rounded-circle">
+                    <img alt="Image placeholder" src="tony.jpg">
+                  </span>
+                  <div class="media-body  ml-2  d-none d-lg-block">
+                    <span class="mb-0 text-sm  font-weight-bold">Tony Stark</span>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu  dropdown-menu-right ">
+                <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Welcome!</h6>
+                </div>
+                <a href="#!" class="dropdown-item">
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Settings</span>
+                </a>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-calendar-grid-58"></i>
+                  <span>Activity</span>
+                </a>
+                <a href="#!" class="dropdown-item">
+                  <i class="ni ni-support-16"></i>
+                  <span>Support</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="/cedhosting/logout.php" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header -->
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Default</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Default</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+              <a href="#" class="btn btn-sm btn-neutral">New</a>
+              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+            </div>
+          </div>
+          <!-- Card stats -->
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="row">
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+              </div></div></div></div></div></div>
+     <div class="container mt--8 pb-5">
+      <!-- Table -->
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="card bg-secondary border-0">
+            <div class="card-header bg-transparent pb-5">
+            <div class="card-body px-lg-5 py-lg-5">
+              <div class="text-center text-muted mb-4">
+                <small><h3>Sign up with credentials</h3></small>
+              </div>
+              <form role="form">
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    </div>
+                    <?php
+                    $product=new Product();
+                    $row=$product->extract();
+                      if ($row->num_rows>0) {
+                          while ($rowcategory = $row->fetch_assoc()) { ?>
+                            <input class="form-control" placeholder="Name" value= "<?php echo $rowcategory['prod_name']; ?>" type="text" disabled>
+                          <?php }
+                      } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="category" type="text" id="category">
+                    <!-- <input class="form-control" placeholder="link" type="url" id="link"> -->
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <!-- <input class="form-control" placeholder="category" type="text" id="category"> -->
+                    <input class="form-control" placeholder="link" type="url" id="link">
+                  </div>
+                </div>
+                <div class="row my-4">
+                  <div class="col-12">
+                    <div class="custom-control custom-control-alternative custom-checkbox">
+                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                      <label class="custom-control-label" for="customCheckRegister">
+                        <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary mt-4" id="submit">Create account</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+<script>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav <?php if(in_array($filename,$productmenu)): ?>current<?php endif; ?>">
-								<li <?php if($filename=='index.php'):?>class="active"<?php endif;?>><a href="index.php">Home </a></li>
-								<li <?php if($filename=='about.php'):?>class="active"<?php endif;?>><a href="about.php">About</a></li>
-								<li <?php if($filename=='services.php'):?>class="active"<?php endif;?>><a href="services.php">Services</a></li>
-								<li <?php if($filename=='linuxhosting.php' ||$filename=='wordpresshosting.php' ||$filename=='windowshosting.php'||$filename=='cmshosting.php' ):?>class="dropdown active"<?php endif;?>>
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
-									<ul class="dropdown-menu">
-										<!-- <li><a href="linuxhosting.php">Linux hosting</a></li>
-										<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
-										<li><a href="windowshosting.php">Windows Hosting</a></li>
-										<li><a href="cmshosting.php">CMS Hosting</a></li> -->
-										<?php 
-										$data=$pro->nav();
-										if($data!=false){
-											for($i=0;$i<count($data);$i++){
-												echo '<li><a href="#">'.$data[$i]['prod_name'].'</a></li>';
 
-											}
-										}
-										?>
-									</ul>			
-								</li>
-								<li <?php if($filename=='pricing.php'):?>class="active"<?php endif;?>><a href="pricing.php">Pricing</a></li>
-								<li <?php if($filename=='blog.php'):?>class="active"<?php endif;?>><a href="blog.php">Blog</a></li>
-								<li <?php if($filename=='contact.php'):?>class="active"<?php endif;?>><a href="contact.php">Contact</a></li>
-								<li <?php if($filename=='codes.php'):?>class="active"<?php endif;?>><a href="codes.php"><i class="fa fa-shopping-cart"></i></a></li>
-								<?php 
-							    	if(isset($_SESSION['user'])){
-									echo '<li><a href="#">Logout</a></li>';
-								}
-								else{
-									echo '<li if($filename=="login.php"):class="active" endif;><a href="login.php">Login</a></li>';
-								}
-								?>
-							</ul>		  
-						</div><!-- /.navbar-collapse -->
-					</div><!-- /.container-fluid -->
-				</nav>
-			</div>
-		</div>
+</script>
 
-	<!---header--->
-	<!-- typography -->
-	<div class="content">
-		<div class="typography">
-			<!-- container-wrap -->
-			<div class="container">
-				<div class="typography-info">
-					<h2 class="type">Short Codes</h2>
-				</div>
-				<div class="grid_3 grid_4">
-					<h3 class="hdg">Headings</h3>
-					<div class="bs-example">
-						<table class="table">
-							<tbody>
-								<tr>
-									<td><h1 id="h1.-bootstrap-heading">h1. Bootstrap heading<a class="anchorjs-link" href="#h1.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h1></td>
-									<td class="type-info">Semibold 36px</td>
-								</tr>
-								<tr>
-									<td><h2 id="h2.-bootstrap-heading">h2. Bootstrap heading<a class="anchorjs-link" href="#h2.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h2></td>
-									<td class="type-info">Semibold 30px</td>
-								</tr>
-								<tr>
-									<td><h3 id="h3.-bootstrap-heading">h3. Bootstrap heading<a class="anchorjs-link" href="#h3.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h3></td>
-									<td class="type-info">Semibold 24px</td>
-								</tr>
-								<tr>
-									<td><h4 id="h4.-bootstrap-heading">h4. Bootstrap heading<a class="anchorjs-link" href="#h4.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h4></td>
-									<td class="type-info">Semibold 18px</td>
-								</tr>
-								<tr>
-									<td><h5 id="h5.-bootstrap-heading">h5. Bootstrap heading<a class="anchorjs-link" href="#h5.-bootstrap-heading"><span class="anchorjs-icon"></span></a></h5></td>
-									<td class="type-info">Semibold 14px</td>
-								</tr>
-								<tr>
-									<td><h6>h6. Bootstrap heading</h6></td>
-									<td class="type-info">Semibold 12px</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Buttons</h3>
-					<h1>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h1>
-					<h2>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h2>
-					<h3>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h3>
-					<h4>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h4>
-					<h5>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h5>
-					<h6>
-						<a href="#"><span class="label label-default">Default</span></a>
-						<a href="#"><span class="label label-primary">Primary</span></a>
-						<a href="#"><span class="label label-success">Success</span></a>
-						<a href="#"><span class="label label-info">Info</span></a>
-						<a href="#"><span class="label label-warning">Warning</span></a>
-						<a href="#"><span class="label label-danger">Danger</span></a>
-					</h6>
-				</div>			   
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Progress Bars</h3>
-					<div class="tab-content">
-						<div class="tab-pane active" id="domprogress">
-							<div class="progress">    
-								<div class="progress-bar progress-bar-primary" style="width: 20%"></div>
-							</div>
-							<p>Info with <code>progress-bar-info</code> class.</p>
-							<div class="progress">    
-								<div class="progress-bar progress-bar-info" style="width: 60%"></div>
-							</div>
-							<p>Success with <code>progress-bar-success</code> class.</p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success" style="width: 30%"></div>
-							</div>
-							<p>Warning with <code>progress-bar-warning</code> class.</p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-warning" style="width: 70%"></div>
-							</div>
-							<p>Danger with <code>progress-bar-danger</code> class.</p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-danger" style="width: 50%"></div>
-							</div>
-							<p>Inverse with <code>progress-bar-inverse</code> class.</p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-inverse" style="width: 40%"></div>
-							</div>
-							<p>Inverse with <code>progress-bar-inverse</code> class.</p>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success" style="width: 35%"><span class="sr-only">35% Complete (success)</span></div>
-								<div class="progress-bar progress-bar-warning" style="width: 20%"><span class="sr-only">20% Complete (warning)</span></div>
-								<div class="progress-bar progress-bar-danger" style="width: 10%"><span class="sr-only">10% Complete (danger)</span></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Alerts</h3>
-					<div class="alert alert-success" role="alert">
-						<strong>Well done!</strong> You successfully read this important alert message.
-					</div>
-					<div class="alert alert-info" role="alert">
-						<strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-					</div>
-					<div class="alert alert-warning" role="alert">
-						<strong>Warning!</strong> Best check yo self, you're not looking too good.
-					</div>
-					<div class="alert alert-danger" role="alert">
-						<strong>Oh snap!</strong> Change a few things up and try submitting again.
-					</div>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Pagination</h3>
-					<div class="col-md-6">
-						<nav>
-							<ul class="pagination pagination-lg">
-								<li><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-							</ul>
-						</nav>
-						<nav>
-							<ul class="pagination">
-								<li><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-							</ul>
-						</nav>
-						<nav>
-							<ul class="pagination pagination-sm">
-								<li><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-							</ul>
-						</nav>
-					</div>
-					<div class="col-md-6">
-						<ul class="pagination pagination-lg">
-							<li class="disabled"><a href="#"><i class="fa fa-angle-left">«</i></a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#"><i class="fa fa-angle-right">»</i></a></li>
-						</ul>
-						<nav>
-							<ul class="pagination">
-								<li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-								<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-							</ul>
-						</nav>
-						<ul class="pagination pagination-sm">
-							<li class="disabled"><a href="#"><i class="fa fa-angle-left">«</i></a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#"><i class="fa fa-angle-right">»</i></a></li>
-						</ul>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Breadcrumbs</h3>
-					<ol class="breadcrumb">
-						<li class="active">Home</li>
-					</ol>
-					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li class="active">Library</li>
-					</ol>
-					<ol class="breadcrumb">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Library</a></li>
-						<li class="active">Data</li>
-					</ol>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Badges</h3>
-					<div class="col-md-6">
-						<p>Add modifier classes to change the appearance of a badge.</p>
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Classes</th>
-									<th>Badges</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>No modifiers</td>
-									<td><span class="badge">42</span></td>
-								</tr>
-								<tr>
-									<td><code>.badge-primary</code></td>
-									<td><span class="badge badge-primary">1</span></td>
-								</tr>
-								<tr>
-									<td><code>.badge-success</code></td>
-									<td><span class="badge badge-success">22</span></td>
-								</tr>
-								<tr>
-									<td><code>.badge-info</code></td>
-									<td><span class="badge badge-info">30</span></td>
-								</tr>
-								<tr>
-									<td><code>.badge-warning</code></td>
-									<td><span class="badge badge-warning">412</span></td>
-								</tr>
-								<tr>
-									<td><code>.badge-danger</code></td>
-									<td><span class="badge badge-danger">777</span></td>
-								</tr>
-							</tbody>
-						</table>                    
-					</div>
-					<div class="col-md-6">
-						<p>Easily highlight new or unread items with the <code>.badge</code> class</p>
-						<div class="list-group list-group-alternate"> 
-							<a href="#" class="list-group-item"><span class="badge">201</span> <i class="ti ti-email"></i> Inbox </a> 
-							<a href="#" class="list-group-item"><span class="badge badge-primary">5021</span> <i class="ti ti-eye"></i> Profile visits </a> 
-							<a href="#" class="list-group-item"><span class="badge">14</span> <i class="ti ti-headphone-alt"></i> Call </a> 
-							<a href="#" class="list-group-item"><span class="badge">20</span> <i class="ti ti-comments"></i> Messages </a> 
-							<a href="#" class="list-group-item"><span class="badge badge-warning">14</span> <i class="ti ti-bookmark"></i> Bookmarks </a> 
-							<a href="#" class="list-group-item"><span class="badge badge-danger">30</span> <i class="ti ti-bell"></i> Notifications </a> 
-						</div>
-					</div>
-				   <div class="clearfix"> </div>
-				</div>	 
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Wells</h3>
-					<div class="well">
-						There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-					</div>
-					<div class="well">
-						It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here
-					</div>
-					<div class="well">
-							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-					</div>
-				</div>
-				<div class="grid_3 grid_5">
-					<h3 class="hdg">Tabs</h3>
-					<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
-						<ul id="myTab" class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Home</a></li>
-							<li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Profile</a></li>
-							<li role="presentation" class="dropdown">
-								<a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents">Dropdown <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-									<li><a href="#dropdown1" tabindex="-1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-									<li><a href="#dropdown2" tabindex="-1" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-								</ul>
-							</li>
-						</ul>
-						<div id="myTabContent" class="tab-content">
-							<div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
-								<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-								<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="dropdown1" aria-labelledby="dropdown1-tab">
-								<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-							</div>
-							<div role="tabpanel" class="tab-pane fade" id="dropdown2" aria-labelledby="dropdown2-tab">
-								<p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<h3 class="hdg">Unordered List</h3>
-				<ul class="list-group">
-				  <li class="list-group-item">Cras justo odio</li>
-				  <li class="list-group-item">Dapibus ac facilisis in</li>
-				  <li class="list-group-item">Morbi leo risus</li>
-				  <li class="list-group-item">Porta ac consectetur ac</li>
-				  <li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-				<h3 class="hdg">Ordered List</h3>
-				<ol>
-					<li class="list-group-item1">Cras justo odio</li>
-					<li class="list-group-item1">Dapibus ac facilisis in</li>
-					<li class="list-group-item1">Morbi leo risus</li>
-					<li class="list-group-item1">Porta ac consectetur ac</li>
-					<li class="list-group-item1">Vestibulum at eros</li>
-				</ol>
-				<h3 class="hdg">Forms</h3>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">@</span>
-					<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-				</div>
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
-					<span class="input-group-addon" id="basic-addon2">@example.com</span>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon">$</span>
-						<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-					<span class="input-group-addon">.00</span>
-				</div>
-				<div class="input-group input-group-lg">
-					<span class="input-group-addon" id="sizing-addon1">@</span>
-					<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon" id="sizing-addon2">@</span>
-					<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2">
-				</div>
-				<div class="input-group input-group-sm">
-					<span class="input-group-addon" id="sizing-addon3">@</span>
-					<input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3">
-				</div>
-				<div class="row">
-					<div class="col-lg-6 in-gp-tl">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<input type="checkbox" aria-label="...">
-							</span>
-							<input type="text" class="form-control" aria-label="...">
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-					<div class="col-lg-6 in-gp-tb">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<input type="radio" aria-label="...">
-							</span>
-							<input type="text" class="form-control" aria-label="...">
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-				</div><!-- /.row -->
-				<div class="row">
-					<div class="col-lg-6 in-gp-tl">
-						<div class="input-group">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button">Go!</button>
-							</span>
-							<input type="text" class="form-control" placeholder="Search for...">
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-					<div class="col-lg-6 in-gp-tb">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search for...">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button">Go!</button>
-							</span>
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-				</div><!-- /.row -->
-				<div class="row">
-					<div class="col-lg-6 in-gp-tl">
-						<div class="input-group">
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</div><!-- /btn-group -->
-							<input type="text" class="form-control" aria-label="...">
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-					<div class="col-lg-6 in-gp-tb">
-						<div class="input-group">
-							<input type="text" class="form-control" aria-label="...">
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</div><!-- /btn-group -->
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-				</div><!-- /.row -->
-				<div class="page-header">
-					<h3 class="hdg">Tables</h3>
-				</div>
-				<h2 class="typoh2">Default styles</h2>
-				<p>For basic stylinglight padding and only horizontal add the base class <code>.table</code> to any <code>&lt;table&gt;</code>.</p>
-				<div class="bs-docs-example">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Username</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Larry</td>
-								<td>the Bird</td>
-								<td>@twitter</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<hr class="bs-docs-separator">
-				<p>Add any of the following classes to the <code>.table</code> base class.</p>
-				<p>Adds zebra-striping to any table row within the <code>&lt;tbody&gt;</code> via the <code>:nth-child</code> CSS selector (not available in IE7-8).</p>
-				<div class="bs-docs-example">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Username</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Larry</td>
-								<td>the Bird</td>
-								<td>@twitter</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<p>Add borders and rounded corners to the table.</p>
-				<div class="bs-docs-example">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Username</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td rowspan="2">1</td>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@mdo</td>
-							</tr>
-							<tr>
-								<td>Mark</td>
-								<td>Otto</td>
-								<td>@getbootstrap</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Jacob</td>
-								<td>Thornton</td>
-								<td>@fat</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td colspan="2">Larry the Bird</td>
-								<td>@twitter</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<p>Enable a hover state on table rows within a <code>&lt;tbody&gt;</code>.</p>
-				<div class="bs-docs-example">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-							  <th>#</th>
-							  <th>First Name</th>
-							  <th>Last Name</th>
-							  <th>Username</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-							  <td>1</td>
-							  <td>Mark</td>
-							  <td>Otto</td>
-							  <td>@mdo</td>
-							</tr>
-							<tr>
-							  <td>2</td>
-							  <td>Jacob</td>
-							  <td>Thornton</td>
-							  <td>@fat</td>
-							</tr>
-							<tr>
-							  <td>3</td>
-							  <td colspan="2">Larry the Bird</td>
-							  <td>@twitter</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<!-- //container-wrap -->
-		</div>
-	<!-- //typography -->
-	</div>
-			<!---footer--->
-				<?php include('footer.php'); ?>
-			<!---footer--->
-			
-			
 </body>
 </html>

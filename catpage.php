@@ -9,7 +9,23 @@ include('header.php');
 include('admin/config.php');
 $obj=new DB_con();
 include_once('admin/Product.php');
-$pro=new Product(); ?>
+$pro=new Product(); 
+
+if(isset($_GET['id'])){
+    $id=$_GET['id'];
+    include_once('admin/Product.php');
+    $pro=new Product();
+    $heading=$pro->getpageheading($id);
+    // print_r($heading);
+    $datacon=$pro->getcatpagedata($id);
+    // print_r($datacon);
+    // echo '<pre>';
+    // print_r($datacon);
+    // echo '</pre>';
+    $html1=$heading['html'];
+}
+
+?>
 <!---fonts-->
 <!--script-->
 <script src="js/modernizr.custom.97074.js"></script>
@@ -99,23 +115,12 @@ $pro=new Product(); ?>
                         <div class="container">
                             <div class="linux-grids">
                                 <div class="col-md-8 linux-grid">
-                                <!-- <h2>Linux Hosting</h2>
+                                <h2><?php 
+                                echo $heading['prod_name']
+                                 ?></h2>
                                 <ul>
-                                    <li><span>Unlimited </span> Domains, Disk Space, Bandwidth and Email Addresses</li>
-                                    <li><span>99.9% uptime </span> with dedicated 24/7 technical support</li>
-                                    <li><span>Powered by </span> CloudLinux, cPanel (demo), Apache, MySQL, PHP, Ruby & more</li>
-                                    <li><span>Launch  </span> your business with Rs. 2000* Google AdWords Credit *</li>
-                                    <li><span>30 day </span> Money Back Guarantee</li>
-                                </ul> -->
-                                <?php 
-                                
-                                if($return->num_rows >0){
-                                    while($row=$return->fetch_assoc()){?>
-                                    <h2><?php echo $row['prod_name'];}?></h2>
-                                    <?php echo json_decode($row['html']);?>
-                                <?php }
-                                }
-                                ?>
+                                    <?php echo $html1 ?>
+                                </ul>
                                   <a href="#tab">view plans</a>
                                 </div>
                                 <div class="col-md-4 linux-grid1">
@@ -135,24 +140,34 @@ $pro=new Product(); ?>
                                 <div id="myTabContent" class="tab-content">
                                     <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
                                         <div class="linux-prices">
-                                            <div class="col-md-3 linux-price">
+                                        <?php
+                                        if($datacon!=""){
+                                        $html="";
+                                        for($i=0;$i<count($datacon);$i++){
+                                        $html.='<div class="col-md-3 linux-price">
                                                 <div class="linux-top">
                                                 <h4>Standard</h4>
                                                 </div>
                                                 <div class="linux-bottom">
-                                                    <h5>$279 <span class="month">per month</span></h5>
+                                                    <h5>'.$datacon[$i]["mon_price"].'<span class="month">per month</span></h5>
+                                                    <h5>'.$datacon[$i]["annual_price"].'<span class="month">per year</span></h5>
                                                     <h6>Single Domain</h6>
                                                     <ul>
-                                                    <li><strong>Unlimited</strong> Disk Space</li>
-                                                    <li><strong>Unlimited</strong> Data Transfer</li>
-                                                    <li><strong>Unlimited</strong> Email Accounts</li>
-                                                    <li><strong>Includes </strong>  Global CDN</li>
+                                                    <li><strong>'.$datacon[$i]["webspace"].'</strong> Web Space</li>
+                                                    <li><strong>'.$datacon[$i]["bandwidth"].'</strong> bandwidth</li>
+                                                    <li><strong>'.$datacon[$i]["mailbox"].'</strong> Mailbox </li>
+                                                    <li><strong>'.$datacon[$i]["domain"].' </strong>Free Domain</li>
+                                                    <li><strong>'.$datacon[$i]["language"].' </strong>Language Technology</li>
                                                     <li><strong>High Performance</strong>  Servers</li>
                                                     <li><strong>location</strong> : <img src="images/india.png"></li>
                                                     </ul>
                                                 </div>
                                                 <a href="#">buy now</a>
-                                            </div>
+                                            </div>';
+                                        }
+                                        print_r($html);
+                                    }
+                                        ?>
                                             <div class="col-md-3 linux-price">
                                                 <div class="linux-top">
                                                 <h4>Advanced</h4>
